@@ -2,110 +2,94 @@ package java201521123077loc;
 
 
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 public class Main {
-	private int [] arr=new int[8];
-	public void getBirthDate(Scanner in){	
-		int amount=in.nextInt(); 
-		for(int i=0;i<amount;i++)
+	private class Id 
+	{
+		String str;
+		int year;
+		int month;
+		int day;
+		public Id()
 		{
-			String id=in.next();
-			System.out.println(id.substring(6, 10)+"-"+id.substring(10, 12)+"-"+id.substring(12, 14));
+			this.str=new String();
+//			this.str=new StringBuilder(str);
+//			this.extract();
 		}
-	
+		public void extract()
+		{
+//			id.substring(6, 10)+"-"+id.substring(10, 12)+"-"+id.substring(12, 14));
+			this.year=Integer.parseInt(str.substring(6, 10));
+			this.month=Integer.parseInt(str.substring(10, 12));
+			this.day=Integer.parseInt(str.substring(12, 14));
+		}
+		
 	}
-	public int search(Scanner in){
-		int pos=-1;	
-		int num=in.nextInt();
-		for(int i=0;i<arr.length;i++)
-		{		
-			if(arr[i]==num)
+	int Partition(Id A[], int down, int up)
+	{
+		Id pivot = A[down];
+		int low = down, high = up;
+		while (low<high)
+		{
+			while (low < high&&A[high].year>=pivot.year)
 			{
-				pos=i;
-				break;
+				high--;
 			}
-		}
-		return pos;
-	}
-	public void fib(Scanner in){
-//		in.useDelimiter("\n");
-		int num=0;
-//		if(in.hasNextInt())
-			num=in.nextInt();
-		int first=1,second=1,next=first+second;
-		if(num<=0)
-		{
-			System.out.println("Num>0   num:"+num);
-			return;
-		}
-		else if(num==1)
-		{
-			System.out.println("1");
-		}
-		else if(num==2)
-		{
-			System.out.println("1 1");
-		}
-		else
-		{
-			System.out.print("1 1");
-			for(int i=3;i<=num;i++)
+			A[low] = A[high];
+			while (low < high&&A[low].year<=pivot.year)
 			{
-				System.out.print(" "+next);
-				first=second;
-				second=next;
-				next=first+second;		
+				low++;
 			}
-			System.out.println();
-		}	
+			A[high] = A[low];
+		}
+		A[low]= pivot;
 
+		return low;
 	}
-	public  void sort(Scanner in){
-		String num=in.nextLine();
-		String numSpilit[]=num.split(" ");
-		arr=Arrays.copyOf(arr,numSpilit.length );//update the arrays
-		for(int i=0;i<numSpilit.length;i++)
-		{		
-			arr[i]=Integer.parseInt(numSpilit[i]);		
+	void QuickSort(Id A[], int down, int up)
+	{
+		if (down >= up)return;
+		int center = Partition(A, down, up);
+		QuickSort(A, down, center - 1);
+		QuickSort(A, center + 1, up);
+		
+	}
+	public void sortUp(Id[] id)
+	{
+		QuickSort(id,0,id.length);
+		System.out.println("QS com.");
+	}
+	public void print(Id[] id)
+	{
+		for(int i=0;i<id.length;i++)
+		{
+			System.out.println(id[i].str);
 		}
-		Arrays.sort(arr);
-		System.out.println(Arrays.toString(arr));
 	}
 	public static void main(String[] args) {	
-		Main menu=new Main();
-		Scanner in=new Scanner(System.in);	
-		String command;
+		Main test=new Main();
+		Scanner in=new Scanner(System.in);
+		int amount=in.nextInt();
+		Id id[]=new Id[amount];
+		String input=new String();
+//		for(int i=0;i<amount;i++)
+		int i=0;
+		
 		while(in.hasNext())
 		{
 			
-			command=in.nextLine();
-			if(command.equals("fib"))
-			{
-				menu.fib(in);
-			}
-			else if(command.equals("sort"))
-			{
-				menu.sort(in);
-			}
-			else if(command.equals("search"))
-			{
-				System.out.println(menu.search(in));
-			}
-			else if(command.equals("getBirthDate"))
-			{
-				menu.getBirthDate(in);
-			}
-			else if(command.equals(""))
-			{
-//				System.out.println("EMPTY");
-			}
-			else
-			{
-				System.out.println("exit");
-			}			
+			
+			
+			id[i].str=in.nextLine();
+			
+			id[i].extract();
+			i++;
 		}
-		in.close();		
+		test.print(id);
+		test.sortUp(id);
+		test.print(id);
+		in.close();
 	}
 }
 
