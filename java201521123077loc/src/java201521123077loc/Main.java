@@ -1,26 +1,21 @@
 package java201521123077loc;
 
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner in=new Scanner(System.in);
-		BigInteger sum=new BigInteger("0");
-		String str;
-		while(in.hasNext())
+		BigDecimal  first,second;
+		while(in.hasNextDouble())
 		{
-			str=in.next();
-			if(str.equals("e")||str.equals("E"))
-			{
-				break;
-			}
-			BigInteger num=new BigInteger(str);	
-			sum=sum.add(num);
+			first=in.nextBigDecimal();
+			second=in.nextBigDecimal();
+			System.out.println(first.add(second));
+			System.out.println(first.multiply(second));
 		}
-		System.out.println(sum);
 		in.close();
 
 	}
