@@ -1,82 +1,85 @@
 package java201521123077loc;
 
 
+import java.util.Arrays;
 import java.util.Scanner;
 public class Main {
-	public static void main(String[] args) {	
-		
-		
+	public static void main(String[] args) {		
 		Scanner in=new Scanner(System.in);
-		int amount=in.nextInt();
-		Person []man=new Person[amount];
-		String name;
-		boolean gender;
-		int age;
-		for(int i=0;i<man.length;i++)
+//		int amount=in.nextInt();
+		int length1=in.nextInt();
+		int width1=in.nextInt();
+		int length2=in.nextInt();
+		int width2=in.nextInt();
+		Rectangle[]arrRec=new Rectangle[2];
+		arrRec[0]=new Rectangle(length1,width1);
+		arrRec[1]=new Rectangle(length2,width2);
+		int radius1=in.nextInt();
+		int radius2=in.nextInt();
+		Circle[]arrCir=new Circle[2];
+		arrCir[0]=new Circle(radius1);
+		arrCir[1]=new Circle(radius2);
+		int perimeterSum=0;
+		int areaSum=0;
+		for(int i=0;i<arrRec.length;i++)
 		{
-			name=in.next();
-			age=in.nextInt();
-			gender=in.nextBoolean();
-			
-			man[i]=new Person(name,age,gender);
-			
+			perimeterSum+=arrRec[i].getPerimeter();
+			areaSum+=arrRec[i].getArea();
 		}
-		for(int i=man.length-1;i>=0;i--)
+		for(int i=0;i<arrCir.length;i++)
 		{
-			System.out.println(man[i]);
+			perimeterSum+=arrCir[i].getPerimeter();
+			areaSum+=arrCir[i].getArea();
 		}
-		
-		Person anNewMan=new Person();
-		System.out.println(anNewMan);
+		System.out.println(perimeterSum);
+		System.out.println(areaSum);
+		System.out.println(Arrays.deepToString(arrRec));
+		System.out.println(Arrays.deepToString(arrCir));
 	}
 }
-class Person
+class Rectangle
 {
-	private String name;
-	private boolean gender;
-	private int age;
-	private int id;
-	public Person()
-	{
-		System.out.println("This is constructor");
-		System.out.println(name+","+age+","+gender+","+id);
-	}
-	public Person(String name,  int age,boolean gender) {
+	int width;
+	int length;
+	public Rectangle(int width, int length) {
 		super();
-		this.name = name;
-		this.gender = gender;
-		this.age = age;
+		this.width = width;
+		this.length = length;
 	}
-
-	public String getName() {
-		return name;
+	public int getPerimeter()
+	{
+		return 2*(width+length);
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public boolean isGender() {
-		return gender;
-	}
-	public void setGender(boolean gender) {
-		this.gender = gender;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", age=" + age + ", gender=" + gender
-				+ ", id=" + id + "]";
+		return "Rectangle [width=" + width + ", length=" + length + "]";
+	}
+	public int getArea()
+	{
+		return width*length;
+	}
+}
+class Circle
+{
+	int radius;
+
+	public Circle(int radius) {
+		super();
+		this.radius = radius;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Circle [radius=" + radius + "]";
+	}
+
+	public int getPerimeter()
+	{
+		return (int)(2*radius*Math.PI);
+	}
+	public int getArea()
+	{
+		return (int)(Math.PI*Math.pow(radius,2));
+	}
 }
