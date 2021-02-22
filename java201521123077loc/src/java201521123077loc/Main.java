@@ -1,13 +1,11 @@
 package java201521123077loc;
 
 
-
-
 import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {	
 		
-		Id id=new Id();
+		
 		Scanner in=new Scanner(System.in);
 		int amount=in.nextInt();
 		Person []man=new Person[amount];
@@ -32,26 +30,12 @@ public class Main {
 		System.out.println(anNewMan);
 	}
 }
-class Id
-{
-	public int idNum;
-}
 class Person
 {
 	private String name;
 	private boolean gender;
 	private int age;
 	private int id;
-	public static int num=0;
-	static
-	{	
-		System.out.println("This is static initializtion block");
-	}
-	{
-		this.id=num++;
-		System.out.println("This is initializtion block, id is "+this.id);
-		
-	}
 	public Person()
 	{
 		System.out.println("This is constructor");
