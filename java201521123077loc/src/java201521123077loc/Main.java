@@ -2,76 +2,97 @@ package java201521123077loc;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 public class Main {
-	
-	public int reverIndexOf(List<String> strList,String str)
-	{	
-		int i=-1;
-		for( i=strList.size()-1;i>=0;i--)
-		{
-			if(str.equals(strList.get(i)))
-			{
-				return i;
-			}
-		}
-		
-		return -1;
-	}
 	public static void main(String[] args) {	
-		Main test=new Main();
+		
+		Id id=new Id();
 		Scanner in=new Scanner(System.in);
-		List<String> strList= new ArrayList<String>(); 
-		
-		strList.add("begin");	
-		while(!in.hasNext("!!end!!"))
+		int amount=in.nextInt();
+		Person []man=new Person[amount];
+		String name;
+		boolean gender;
+		int age;
+		for(int i=0;i<man.length;i++)
 		{
-			strList.add(in.next());		
+			name=in.next();
+			age=in.nextInt();
+			gender=in.nextBoolean();
+			
+			man[i]=new Person(name,age,gender);
+			
 		}
-//		in.skip("!!end!!");
-		String temp=new String();
-		temp=in.nextLine();
-		strList.add("end");
-		System.out.println(strList);
-		String str=new String();
-//		System.out.println("Show");
-		
-//		if(in.hasNext())
-//		{
-			str=in.next();
-//			System.out.println(str);	
-//		}	
-		System.out.println(strList.contains(str));
-		System.out.println(strList.indexOf(str));
-		System.out.println(test.reverIndexOf(strList,str));
-		System.out.println("begin");
-		strList.remove(0);
-		System.out.println(strList);
-		
-		
-		str=in.next();
-		strList.set(1, str);
-		System.out.println(strList);
-		
-		str=in.next();
-		List<String> strList1= new ArrayList<String>(); 
-		for(int i=0; i<strList.size()-1;i++)
+		for(int i=man.length-1;i>=0;i--)
 		{
-			if(strList.get(i).contains(str))
-			{
-				strList1.add(strList.get(i));
-			}
+			System.out.println(man[i]);
 		}
-		System.out.println(strList1);
-		int location;
-		if((location=strList.indexOf(str))!=-1)
-			strList.remove(location);
-		System.out.println(strList);
-		strList.clear();
-		System.out.println(strList+" "+strList.size()+","+strList.isEmpty());
 		
-		in.close();
+		Person anNewMan=new Person();
+		System.out.println(anNewMan);
 	}
+}
+class Id
+{
+	public int idNum;
+}
+class Person
+{
+	private String name;
+	private boolean gender;
+	private int age;
+	private int id;
+	public static int num=0;
+	static
+	{	
+		System.out.println("This is static initializtion block");
+	}
+	{
+		this.id=num++;
+		System.out.println("This is initializtion block, id is "+this.id);
+		
+	}
+	public Person()
+	{
+		System.out.println("This is constructor");
+		System.out.println(name+","+age+","+gender+","+id);
+	}
+	public Person(String name,  int age,boolean gender) {
+		super();
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public boolean isGender() {
+		return gender;
+	}
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + ", gender=" + gender
+				+ ", id=" + id + "]";
+	}
+	
+	
 }
