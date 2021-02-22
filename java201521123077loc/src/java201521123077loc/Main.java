@@ -70,7 +70,7 @@ public class Main {
 			strList.remove(location);
 		System.out.println(strList);
 		strList.clear();
-		System.out.println(strList+","+strList.size()+","+strList.isEmpty());
+		System.out.println(strList+" "+strList.size()+","+strList.isEmpty());
 		
 		in.close();
 	}
