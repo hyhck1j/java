@@ -1,77 +1,63 @@
 package java201521123077loc;
+
+
+
 //U2 5.6
-
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+enum Grade {
+		A, B, C, D, E
+	}
 public class Main {
 	
-	public int reverIndexOf(List<String> strList,String str)
-	{	
-		int i=-1;
-		for( i=strList.size()-1;i>=0;i--)
+	
+	public static Grade getGrade(int score)
+	{
+		if(score>100)
 		{
-			if(str.equals(strList.get(i)))
-			{
-				return i;
-			}
+			return Grade.E;
 		}
-		
-		return -1;
+		else if(score>=90)
+		{
+			return Grade.A;
+		}
+		else if(score>=80)
+		{
+			return Grade.B;
+		}
+		else if(score>=70)
+		{
+			return Grade.C;
+		}
+		else if(score>=60)
+		{
+			return Grade.D;
+		}
+		else
+		{
+			return Grade.E;
+		}	
+	}
+	public static void printGradeInfo(Grade grade){
+		switch(grade)
+		{
+			case A:System.out.println("Excellent");break;
+			case B:System.out.println("Good");break;
+			case C:System.out.println("Average");break;
+			case D:System.out.println("Fair");break;
+			case E:System.out.println("Poor");break;
+		}
+	       System.out.println("class name="+Grade.class);
+	       System.out.println("grade value="+grade);
 	}
 	public static void main(String[] args) {	
-		Main test=new Main();
+		
 		Scanner in=new Scanner(System.in);
-		List<String> strList= new ArrayList<String>(); 
-		
-		strList.add("begin");	
-		while(!in.hasNext("!!end!!"))
+		int grade;
+		while(in.hasNextInt())
 		{
-			strList.add(in.next());		
+			grade=in.nextInt();
+			printGradeInfo(getGrade(grade));		
 		}
-//		in.skip("!!end!!");
-		String temp=new String();
-		temp=in.nextLine();
-		strList.add("end");
-		System.out.println(strList);
-		String str=new String();
-//		System.out.println("Show");
-		
-//		if(in.hasNext())
-//		{
-			str=in.next();
-//			System.out.println(str);	
-//		}	
-		System.out.println(strList.contains(str));
-		System.out.println(strList.indexOf(str));
-		System.out.println(test.reverIndexOf(strList,str));
-		System.out.println("begin");
-		strList.remove(0);
-		System.out.println(strList);
-		
-		
-		str=in.next();
-		strList.set(1, str);
-		System.out.println(strList);
-		
-		str=in.next();
-		List<String> strList1= new ArrayList<String>(); 
-		for(int i=0; i<strList.size()-1;i++)
-		{
-			if(strList.get(i).contains(str))
-			{
-				strList1.add(strList.get(i));
-			}
-		}
-		System.out.println(strList1);
-		int location;
-		if((location=strList.indexOf(str))!=-1)
-			strList.remove(location);
-		System.out.println(strList);
-		strList.clear();
-		System.out.println(strList+" "+strList.size()+","+strList.isEmpty());
-		
 		in.close();
 	}
 }
