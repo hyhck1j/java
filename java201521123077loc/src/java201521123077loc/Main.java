@@ -1,43 +1,65 @@
 package java201521123077loc;
 
-
-import java.util.Arrays;
 import java.util.Scanner;
-public class Main {
-	public static void main(String[] args) {		
+
+public  class Main {
+	
+	public static void main(String[] args) {
 		Scanner in=new Scanner(System.in);
-//		int amount=in.nextInt();
-		int length1=in.nextInt();
-		int width1=in.nextInt();
-		int length2=in.nextInt();
-		int width2=in.nextInt();
-		Rectangle[]arrRec=new Rectangle[2];
-		arrRec[0]=new Rectangle(length1,width1);
-		arrRec[1]=new Rectangle(length2,width2);
-		int radius1=in.nextInt();
-		int radius2=in.nextInt();
-		Circle[]arrCir=new Circle[2];
-		arrCir[0]=new Circle(radius1);
-		arrCir[1]=new Circle(radius2);
-		int perimeterSum=0;
-		int areaSum=0;
-		for(int i=0;i<arrRec.length;i++)
+		int n=in.nextInt();
+		String str=new String();
+		int num1,num2;
+		Shape shape[]=new Shape[n];
+		double sumArea=0.0,sumPerimeter=0.0;
+		int cnt=0;
+		while(n-->0)
 		{
-			perimeterSum+=arrRec[i].getPerimeter();
-			areaSum+=arrRec[i].getArea();
+			str=in.next();
+			if(str.equals("rect"))
+			{
+				num1=in.nextInt();
+				num2=in.nextInt();
+				shape[cnt]=new Rectangle(num1,num2);
+				sumArea+=shape[cnt].getArea();
+				sumPerimeter+=shape[cnt].getPerimeter();
+			}
+			else if(str.equals("cir"))
+			{
+				num1=in.nextInt();
+				shape[cnt]=new Circle(num1);
+				sumArea+=shape[cnt].getArea();
+				sumPerimeter+=shape[cnt].getPerimeter();
+			}
+			cnt++;
+			
 		}
-		for(int i=0;i<arrCir.length;i++)
+
+		System.out.printf("%.2f\n%.2f\n",sumArea,sumPerimeter);
+		for(int i=0;i<shape.length;i++)
 		{
-			perimeterSum+=arrCir[i].getPerimeter();
-			areaSum+=arrCir[i].getArea();
+			System.out.println(shape[i].getClass().getSuperclass());
 		}
-		System.out.println(perimeterSum);
-		System.out.println(areaSum);
-		System.out.println(Arrays.deepToString(arrRec));
-		System.out.println(Arrays.deepToString(arrCir));
+		
 	}
 }
-class Rectangle
+
+abstract class Shape {
+	
+
+	protected static double PI=3.14;
+	
+	public double getPerimeter()
+	{
+		return 0.0;
+	}
+	public double getArea()
+	{
+		return 0.0;
+	}
+	
+
+}
+class Rectangle extends Shape
 {
 	int width;
 	int length;
@@ -46,7 +68,7 @@ class Rectangle
 		this.width = width;
 		this.length = length;
 	}
-	public int getPerimeter()
+	public double getPerimeter()
 	{
 		return 2*(width+length);
 	}
@@ -55,12 +77,12 @@ class Rectangle
 	public String toString() {
 		return "Rectangle [width=" + width + ", length=" + length + "]";
 	}
-	public int getArea()
+	public double getArea()
 	{
 		return width*length;
 	}
 }
-class Circle
+class Circle extends Shape
 {
 	int radius;
 
@@ -74,12 +96,12 @@ class Circle
 		return "Circle [radius=" + radius + "]";
 	}
 
-	public int getPerimeter()
+	public double getPerimeter()
 	{
-		return (int)(2*radius*Math.PI);
+		return (2*radius*Math.PI);
 	}
-	public int getArea()
+	public double getArea()
 	{
-		return (int)(Math.PI*Math.pow(radius,2));
+		return (Math.PI*Math.pow(radius,2));
 	}
 }
