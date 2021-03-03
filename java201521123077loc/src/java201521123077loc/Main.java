@@ -1,5 +1,7 @@
 package java201521123077loc;
 
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public  class Main {
@@ -33,11 +35,18 @@ public  class Main {
 			cnt++;
 			
 		}
-
-		System.out.printf("%.2f\n%.2f\n",sumArea,sumPerimeter);
+		System.out.println(sumPerimeter);
+		System.out.println(sumArea);
+//		System.out.printf("%.2f\n%.2f\n",sumPerimeter,sumArea);
+		System.out.print("["+shape[0]);
+		for(int i=1;i<shape.length;i++)
+		{
+			System.out.print(", "+shape[i]);
+		}
+		System.out.println("]");
 		for(int i=0;i<shape.length;i++)
 		{
-			System.out.println(shape[i].getClass().getSuperclass());
+			System.out.println(shape[i].getClass()+","+shape[i].getClass().getSuperclass());
 		}
 		
 	}
@@ -56,6 +65,7 @@ abstract class Shape {
 	{
 		return 0.0;
 	}
+	
 	
 
 }
@@ -98,10 +108,10 @@ class Circle extends Shape
 
 	public double getPerimeter()
 	{
-		return (2*radius*Math.PI);
+		return (2*radius*Shape.PI);
 	}
 	public double getArea()
 	{
-		return (Math.PI*Math.pow(radius,2));
+		return (Shape.PI*Math.pow(radius,2));
 	}
 }
