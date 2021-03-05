@@ -8,110 +8,115 @@ public  class Main {
 	
 	public static void main(String[] args) {
 		Scanner in=new Scanner(System.in);
-		int n=in.nextInt();
-		String str=new String();
-		int num1,num2;
-		Shape shape[]=new Shape[n];
-		double sumArea=0.0,sumPerimeter=0.0;
+		int n1=in.nextInt();
+		PersonOverride persons[]=new PersonOverride[n1];
+		for(int i=0;i<persons.length;i++)
+		{
+			persons[i]=new PersonOverride();
+		}
+		int n2=in.nextInt();
+		PersonOverride persons2[]=new PersonOverride[n2];
+		String tempName;
+		boolean tempGender;
+		int tempAge;
 		int cnt=0;
-		while(n-->0)
+		boolean flag=false;
+		for(int i=0;i<n2;i++)
 		{
-			str=in.next();
-			if(str.equals("rect"))
-			{
-				num1=in.nextInt();
-				num2=in.nextInt();
-				shape[cnt]=new Rectangle(num1,num2);
-				sumArea+=shape[cnt].getArea();
-				sumPerimeter+=shape[cnt].getPerimeter();
-			}
-			else if(str.equals("cir"))
-			{
-				num1=in.nextInt();
-				shape[cnt]=new Circle(num1);
-				sumArea+=shape[cnt].getArea();
-				sumPerimeter+=shape[cnt].getPerimeter();
-			}
-			cnt++;
 			
+			tempName=in.next();
+			tempAge=in.nextInt();
+			tempGender=in.nextBoolean();
+			
+			for(int j=0;j<cnt;j++)
+			{
+				if(persons2[j].equals(tempName, tempAge, tempGender))
+				{
+					flag=true;
+//					System.out.println(cnt+">");
+					
+					break;
+				}
+				if(tempName.equals("default")&&tempAge==1&&tempGender==true)
+				{
+					flag=true;
+					break;
+				}
+			}
+			
+			if(!flag)
+			{
+				persons2[cnt++]=new PersonOverride(tempName, tempAge, tempGender);
+				
+			}
+			flag=false;
 		}
-		System.out.println(sumPerimeter);
-		System.out.println(sumArea);
-//		System.out.printf("%.2f\n%.2f\n",sumPerimeter,sumArea);
-		System.out.print("["+shape[0]);
-		for(int i=1;i<shape.length;i++)
+		for(PersonOverride man:persons)
 		{
-			System.out.print(", "+shape[i]);
-		}
-		System.out.println("]");
-		for(int i=0;i<shape.length;i++)
-		{
-			System.out.println(shape[i].getClass()+","+shape[i].getClass().getSuperclass());
+			System.out.println(man);
 		}
 		
+		for(PersonOverride man:persons2)
+		{
+			if(man!=null)
+				System.out.println(man);
+		}
+		System.out.println(cnt);
+		System.out.println(Arrays.toString(PersonOverride.class.getConstructors()));
+		
+		in.close();
 	}
 }
 
-abstract class Shape {
-	
-
-	protected static double PI=3.14;
-	
-	public double getPerimeter()
-	{
-		return 0.0;
-	}
-	public double getArea()
-	{
-		return 0.0;
-	}
-	
-	
-
-}
-class Rectangle extends Shape
+class PersonOverride
 {
-	int width;
-	int length;
-	public Rectangle(int width, int length) {
-		super();
-		this.width = width;
-		this.length = length;
-	}
-	public double getPerimeter()
-	{
-		return 2*(width+length);
-	}
+	private String name;
+	private boolean gender;
+	private int age;
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public boolean isGender() {
+		return gender;
+	}
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public PersonOverride(String name, int age, boolean gender) {
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+	}
+	public PersonOverride()
+	{
+		this("default",1,true);
+	}
 	@Override
 	public String toString() {
-		return "Rectangle [width=" + width + ", length=" + length + "]";
+		return name+"-"+age+"-"+gender;
 	}
-	public double getArea()
+	public boolean equals(String name, int age, boolean gender)
 	{
-		return width*length;
-	}
-}
-class Circle extends Shape
-{
-	int radius;
-
-	public Circle(int radius) {
-		super();
-		this.radius = radius;
+		if(this.gender!=gender)
+			return false;
+		if(this.age!=age)
+			return false;
+		if(!this.name.equals(name))
+			return false;
+		
+		
+		return true;
 	}
 	
-	@Override
-	public String toString() {
-		return "Circle [radius=" + radius + "]";
-	}
-
-	public double getPerimeter()
-	{
-		return (2*radius*Shape.PI);
-	}
-	public double getArea()
-	{
-		return (Shape.PI*Math.pow(radius,2));
-	}
+	
 }
