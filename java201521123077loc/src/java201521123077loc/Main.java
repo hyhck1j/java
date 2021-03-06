@@ -1,122 +1,221 @@
-package java201521123077loc;
 
-
+/*
+ * Null exception problem
+ * tip:  confirm each null-possible point
+ * 		even the confirm process itself
+ * */
 import java.util.Arrays;
-import java.util.Scanner;
+
 
 public  class Main {
 	
+	//Just test data
 	public static void main(String[] args) {
-		Scanner in=new Scanner(System.in);
-		int n1=in.nextInt();
-		PersonOverride persons[]=new PersonOverride[n1];
-		for(int i=0;i<persons.length;i++)
-		{
-			persons[i]=new PersonOverride();
-		}
-		int n2=in.nextInt();
-		PersonOverride persons2[]=new PersonOverride[n2];
-		String tempName;
-		boolean tempGender;
-		int tempAge;
-		int cnt=0;
-		boolean flag=false;
-		for(int i=0;i<n2;i++)
-		{
-			
-			tempName=in.next();
-			tempAge=in.nextInt();
-			tempGender=in.nextBoolean();
-			
-			for(int j=0;j<cnt;j++)
-			{
-				if(persons2[j].equals(tempName, tempAge, tempGender))
-				{
-					flag=true;
-//					System.out.println(cnt+">");
-					
-					break;
-				}
-				if(tempName.equals("default")&&tempAge==1&&tempGender==true)
-				{
-					flag=true;
-					break;
-				}
-			}
-			
-			if(!flag)
-			{
-				persons2[cnt++]=new PersonOverride(tempName, tempAge, tempGender);
-				
-			}
-			flag=false;
-		}
-		for(PersonOverride man:persons)
-		{
-			System.out.println(man);
-		}
 		
-		for(PersonOverride man:persons2)
-		{
-			if(man!=null)
-				System.out.println(man);
-		}
-		System.out.println(cnt);
-		System.out.println(Arrays.toString(PersonOverride.class.getConstructors()));
 		
-		in.close();
+		int[] scores={1,2,3};
+		Car car1=new Car();
+		CarDriver driver=new CarDriver();
+		
+		driver.setName("li");
+		car1.setName("BMW");
+		car1.setDriver(null);
+		car1.setScores(scores);
+		Car clone2 = car1.clone();
+		System.out.println(car1);
+		System.out.println(clone2);
+		car1.getScores()[0] = 8;
+		System.out.println(car1);
+		System.out.println(clone2);
+		
+//		Car fakeCar = null;
+//		Car t=fakeCar.clone();
+//		System.out.println(t);
+//		
+
+//		System.out.println("123");
+//		int[] scores1={1,2,3};
+//		
+//		CarDriver d1=new CarDriver();
+//		d1.setName("dri1");
+//		CarDriver d2=new CarDriver();
+//		d2.setName("dri2");
+//		Car t1=new Car("car1",d1,scores1);
+//		Car t2=t1.clone();
+//		try
+//		{
+//			t2=t1.clone();
+//		}catch(Exception e)
+//		{
+//			
+//		}
+//		finally
+//		{
+//				
+//		}
+//		String str=new String(t1.getName());
+//		System.out.println(str.hashCode());
+//		System.out.println(t1);
+//		System.out.println(t1);
+//		System.out.println(t1.driver);
+//		System.out.println(t2);	//toStringT
+//		System.out.println(t2);
+//		System.out.println(t2.driver);
+//		System.out.println("car.name");
+//		if(t1.name==t2.name)
+//			System.out.println("Same");
+//		else
+//			System.out.println("Not");
+//		System.out.println("dri.name");
+//		if(t1.driver.name==t2.driver.name)
+//			System.out.println("Same");
+//		else
+//			System.out.println("Not");
 	}
 }
-
-class PersonOverride
-{
-	private String name;
-	private boolean gender;
-	private int age;
-	
+class CarDriver {
+    public String name;
+    
+    
+    public CarDriver() {}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isGender() {
-		return gender;
-	}
-	public void setGender(boolean gender) {
-		this.gender = gender;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public PersonOverride(String name, int age, boolean gender) {
-		this.name = name;
-		this.age = age;
-		this.gender = gender;
-	}
-	public PersonOverride()
-	{
-		this("default",1,true);
-	}
 	@Override
 	public String toString() {
-		return name+"-"+age+"-"+gender;
+		return "CarDriver [name=" + name + "]";
 	}
-	public boolean equals(String name, int age, boolean gender)
+ 			
+}
+
+//answer
+class Car implements Cloneable
+{
+	private String name;
+	private CarDriver driver;
+	private int[] scores;
+	
+	
+	public Car()
 	{
-		if(this.gender!=gender)
-			return false;
-		if(this.age!=age)
-			return false;
-		if(!this.name.equals(name))
-			return false;
 		
+	}
+	
+	public Car(String name, CarDriver driver, int[] scores) {
 		
+		this.name = name;
+		this.driver = driver;
+		this.scores = scores;
+		
+	}
+	//Judge if this is NULL itself
+	public boolean isDead()
+	{
+		if(this.name!=null)
+			return false;
+		if(this.scores!=null)
+			return false;
+		if(this.driver!=null)
+			return false;
+		if(this.driver.getName()!=null)
+			return false;
 		return true;
 	}
+	@Override
+	protected Car clone()//throws CloneNotSupportedException 
+	{	
+		//if this  is null,then return null
+		if(this.isDead())
+		{
+			Car nullCar = null;
+			return nullCar;
+		}
+		//add car's name
+		Car tempCar=new Car();
+		if(this.getName()!=null)
+		{
+			String newName=new String(this.getName());
+			tempCar.setName(newName);
+		}
+		else
+		{
+			tempCar.setName(null);
+		}
+		//add car's scores
+		if(this.scores!=null)
+		{
+			int tempArr[]=new int [this.scores.length];
+			for(int i=0;i<this.scores.length;i++)
+			{
+				tempArr[i]=this.scores[i];
+			}
+			tempCar.setScores(tempArr);
+		}
+		else
+		{
+			tempCar.setScores(null);
+		}
+		
+		
+		//add car's driver
+		if(this.driver!=null)
+		{
+			//add car's driver's name	
+			CarDriver newDriver=new CarDriver();
+			if(this.getDriver().getName()!=null)
+			{
+				String newString=new String(this.driver.getName());
+				newDriver.setName(newString);
+			}
+			else
+			{
+				newDriver.setName(null);
+			}
+			
+			tempCar.setDriver(newDriver);
+		}
+		else
+		{
+			tempCar.setDriver(null);
+		}
+			
+		return tempCar;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public CarDriver getDriver() {
+		return driver;
+	}
+	public void setDriver(CarDriver driver) {
+		this.driver = driver;
+	}
+	public int[] getScores() {
+		return scores;
+	}
+	public void setScores(int[] scores) {
+		this.scores = scores;
+	}
+
+	@Override
+	public String toString() {
+		return "Car [name=" + name + ", driver=" + driver + ", scores="
+				+ Arrays.toString(scores) + "]";
+	}
+
 	
+
 	
 }
+
+
+
+
+
+
