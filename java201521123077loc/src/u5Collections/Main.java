@@ -1,56 +1,60 @@
 package u5Collections;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.TreeMap;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner in=new Scanner(System.in);
-				
-		TreeMap<String, Integer> map = new TreeMap<String, Integer>();
+		int amount=in.nextInt();
 		
-		while(in.hasNext())
+		int arr1[]=new int[amount];
+		int loc1=0;	
+		int arr2[]=new int[amount];
+		int loc2=0;
+		int num=0;
+		for(int i=0;i<amount;i++)
 		{
-			String str=in.next();
-			if(str.equals("!!!!!"))
-				break;
-			Integer count=map.get(str);
-			if(count!=null)
+			num=in.nextInt();
+			//为偶数的顾客则去B窗口
+			if(num%2==0)
 			{
-				map.put(str,count+1 );
+				arr2[loc2++]=num;
 			}
 			else
-				map.put(str, 1);
-		}
-		System.out.println(map.size());
-		List<Map.Entry<String,Integer>> list=new ArrayList<Map.Entry<String,Integer>>(map.entrySet()) ;
-		
-         Collections.sort(list,new Comparator<Map.Entry<String,Integer>>() {
-
-			@Override
-			public int compare(Entry<String, Integer> o1,
-					Entry<String, Integer> o2) {
-				if(o1.getValue().equals(o2.getValue()))
-				{
-					return o1.getKey().compareTo(o2.getKey());
-				}
-				return o2.getValue().compareTo(o1.getValue());
+			{
+				arr1[loc1++]=num;
 			}
-		});
-         int count=0;
-         for(Entry<String, Integer> mapping:list){ 
-        	 if(count==10)
-        		 break;
-             System.out.println(mapping.getKey()+"="+mapping.getValue()); 
-             count++;
-        } 
+		}
+		for(int i=0,j=0,count=0;count<amount;)
+		{
+			if(i<loc1)
+			{
+				if(count==amount-1)
+					System.out.print(arr1[i++]);
+				else
+					System.out.print(arr1[i++]+" ");
+				count++;
+			}			
+			if(i<loc1)
+			{
+				if(count==amount-1)
+					System.out.print(arr1[i++]);
+				else
+					System.out.print(arr1[i++]+" ");
+				count++;
+			}
+			if(j<loc2)
+			{
+				if(count==amount-1)
+					System.out.print(arr2[j++]);
+				else
+					System.out.print(arr2[j++]+" ");
+				count++;
+			}
+			
+		}	
 		in.close();
 	}
 
