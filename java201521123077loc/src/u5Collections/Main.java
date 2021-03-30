@@ -1,6 +1,11 @@
 package u5Collections;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+
+import javax.management.Query;
 
 
 public class Main {
@@ -9,54 +14,60 @@ public class Main {
 		Scanner in=new Scanner(System.in);
 		int amount=in.nextInt();
 		
-		int arr1[]=new int[amount];
-		int loc1=0;	
-		int arr2[]=new int[amount];
-		int loc2=0;
-		int num=0;
-		for(int i=0;i<amount;i++)
-		{
-			num=in.nextInt();
-			//为偶数的顾客则去B窗口
-			if(num%2==0)
-			{
-				arr2[loc2++]=num;
-			}
-			else
-			{
-				arr1[loc1++]=num;
-			}
-		}
-		for(int i=0,j=0,count=0;count<amount;)
-		{
-			if(i<loc1)
-			{
-				if(count==amount-1)
-					System.out.print(arr1[i++]);
-				else
-					System.out.print(arr1[i++]+" ");
-				count++;
-			}			
-			if(i<loc1)
-			{
-				if(count==amount-1)
-					System.out.print(arr1[i++]);
-				else
-					System.out.print(arr1[i++]+" ");
-				count++;
-			}
-			if(j<loc2)
-			{
-				if(count==amount-1)
-					System.out.print(arr2[j++]);
-				else
-					System.out.print(arr2[j++]+" ");
-				count++;
-			}
+		
 			
-		}	
+			
 		in.close();
 	}
 
 }
-
+class blockQueue<T> implements Runnable
+{
+	private Queue<T> queue;
+	private int ini;
+	public blockQueue(int ini) {
+		this.queue=new LinkedList<T>();
+		this.ini=ini;
+	}
+	public void push(T item)
+	{
+		this.queue.add(item);
+	}
+	public T pop()
+	{
+		T result=null;
+		if(this.queue.size()>0)
+		{
+			result=this.queue.poll();
+		}
+		return result;
+	}
+	public void clear()
+	{
+		if(!empty())
+		{
+			pop();
+		}
+	}
+	public int size()
+	{
+		return this.queue.size();
+	}
+	public boolean empty()
+	{
+		return size()==0;
+	}
+	@Override
+	public void run() {
+		int count=ini;
+		for(int i=0;i<count;i++)
+		{
+			T res=this.pop();
+			if(res!=null)
+			{
+				System.out.println(res);
+			}
+		}
+	}
+	
+}
